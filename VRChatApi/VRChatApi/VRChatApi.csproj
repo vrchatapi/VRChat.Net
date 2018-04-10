@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="Classes\ConfigResponse.cs" />
     <Compile Include="Classes\UserResponse.cs" />
+    <Compile Include="Endpoints\RemoteConfig.cs" />
+    <Compile Include="Endpoints\UserApi.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="VRChatApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,5 +58,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
