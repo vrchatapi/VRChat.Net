@@ -22,6 +22,16 @@ namespace VRChatApi
         {
             Username = username;
             Password = password;
+
+            // TODO: use the auth cookie
+            if (Global.HttpClient == null)
+            {
+                Global.HttpClient = new HttpClient();
+                Global.HttpClient.BaseAddress = new Uri("https://api.vrchat.cloud/api/1/");
+
+                string authEncoded = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{Username}:{Password}"));
+                Global.HttpClient.DefaultRequestHeaders.Add("Authorization", $"Basic {authEncoded}");
+            }
         }
 
         public async Task<UserResponse> PerformLogin()
@@ -40,17 +50,6 @@ namespace VRChatApi
 
         public async Task<ConfigResponse> GetConfig()
         {
-            // since this is the first function that will be called, we will initialize the http client here.
-            // TODO: use the auth cookie
-            if (Global.HttpClient == null)
-            {
-                Global.HttpClient = new HttpClient();
-                Global.HttpClient.BaseAddress = new Uri("https://api.vrchat.cloud/api/1/");
-
-                string authEncoded = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{Username}:{Password}"));
-                Global.HttpClient.DefaultRequestHeaders.Add("Authorization", $"Basic {authEncoded}");
-            }
-
             HttpResponseMessage response = await Global.HttpClient.GetAsync("config");
 
             ConfigResponse res = null;
