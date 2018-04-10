@@ -40,15 +40,53 @@ namespace VRChatApi.Endpoints
             JObject json = new JObject();
             json["username"] = username;
             json["password"] = password;
-            json["email"] = email;
-            json["birthday"] = birthday;
-            json["acceptedTOSVersion"] = acceptedTOSVersion;
+
+            if (email != null)
+                json["email"] = email;
+
+            if (birthday != null )
+                json["birthday"] = birthday;
+
+            if (acceptedTOSVersion != null)
+                json["acceptedTOSVersion"] = acceptedTOSVersion;
 
             StringContent content = new StringContent(json.ToString(), Encoding.UTF8);
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             HttpResponseMessage response = await Global.HttpClient.PostAsync($"auth/register?apiKey={Global.ApiKey}", content);
+
+            UserResponse res = null;
+
+            if (response.IsSuccessStatusCode)
+            {
+                res = await response.Content.ReadAsAsync<UserResponse>();
+            }
+
+            return res;
+        }
+
+        public async Task<UserResponse> UpdateInfo(string userId, string email = null, string birthday = null, string acceptedTOSVersion = null, List<string> tags = null)
+        {
+            JObject json = new JObject();
+
+            if (email != null)
+                json["email"] = email;
+
+            if (birthday != null)
+                json["birthday"] = birthday;
+
+            if (acceptedTOSVersion != null)
+                json["acceptedTOSVersion"] = acceptedTOSVersion;
+
+            if (tags != null)
+                json["tags"] = JToken.FromObject(tags);
+
+            StringContent content = new StringContent(json.ToString(), Encoding.UTF8);
+
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            HttpResponseMessage response = await Global.HttpClient.PutAsync($"users/{userId}?apiKey={Global.ApiKey}", content);
 
             UserResponse res = null;
 
