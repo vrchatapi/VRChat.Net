@@ -48,7 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\ConfigResponse.cs" />
+    <Compile Include="Classes\NotificationResponse.cs" />
+    <Compile Include="Classes\UserBriefResponse.cs" />
     <Compile Include="Classes\UserResponse.cs" />
+    <Compile Include="Endpoints\FriendsApi.cs" />
     <Compile Include="Endpoints\RemoteConfig.cs" />
     <Compile Include="Endpoints\UserApi.cs" />
     <Compile Include="Global.cs" />

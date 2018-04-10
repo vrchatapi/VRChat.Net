@@ -14,12 +14,14 @@ namespace VRChatApi
     {
         public RemoteConfig RemoteConfig { get; set; }
         public UserApi UserApi { get; set; }
+        public FriendsApi FriendsApi { get; set; }
 
         public VRChatApi(string username, string password)
         {
             // initialize endpoint classes
             RemoteConfig = new RemoteConfig();
             UserApi = new UserApi(username, password);
+            FriendsApi = new FriendsApi();
             
             // initialize http client
             // TODO: use the auth cookie
