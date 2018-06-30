@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Converters;
 
 namespace VRChatApi.Classes
 {
@@ -39,7 +40,8 @@ namespace VRChatApi.Classes
         public int totalVisits { get; set; }
         public short capacity { get; set; }
         public List<string> tags { get; set; }
-        public string releaseStatus { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ReleaseStatus releaseStatus { get; set; }
         public string imageUrl { get; set; }
         public string thumbnailImageUrl { get; set; }
         public string assetUrl { get; set; }

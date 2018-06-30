@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\ConfigResponse.cs" />
+    <Compile Include="Classes\WorldEnums.cs" />
     <Compile Include="Classes\NotificationResponse.cs" />
     <Compile Include="Classes\UserBriefResponse.cs" />
     <Compile Include="Classes\UserResponse.cs" />
