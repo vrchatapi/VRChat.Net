@@ -104,5 +104,19 @@ namespace VRChatApi.Endpoints
 
             return res;
         }
+
+        public async Task<WorldMetadataResponse> GetMetadata(string id)
+        {
+            HttpResponseMessage response = await Global.HttpClient.GetAsync($"worlds/{id}/metadata?apiKey={Global.ApiKey}");
+
+            WorldMetadataResponse res = null;
+
+            if (response.IsSuccessStatusCode)
+            {
+                res = await response.Content.ReadAsAsync<WorldMetadataResponse>();
+            }
+
+            return res;
+        }
     }
 }
