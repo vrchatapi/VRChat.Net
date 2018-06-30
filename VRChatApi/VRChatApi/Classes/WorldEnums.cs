@@ -27,4 +27,12 @@ namespace VRChatApi.Classes
         All,
         Hidden,
     }
+
+    public enum WorldGroups
+    {
+        Any,
+        Active,
+        Recent,
+        Favorite,
+    }
 }
