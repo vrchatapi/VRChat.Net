@@ -27,6 +27,9 @@ namespace TestClient
             //NotificationResponse friendRequestResponse = await api.FriendsApi.SendRequest("usr_f8220fc0-e6f9-45ab-8d9f-ae00e8491685", api.UserApi.Username);
             //string friendDeletionResponse = await api.FriendsApi.DeleteFriend("usr_f8220fc0-e6f9-45ab-8d9f-ae00e8491685");
             //await api.FriendsApi.AcceptFriend("usr_f8220fc0-e6f9-45ab-8d9f-ae00e8491685");
+
+            // world api
+            WorldResponse world = await api.WorldApi.Get("wrld_b2d24c29-1ded-4990-a90d-dd6dcc440300");
         }
     }
 }
