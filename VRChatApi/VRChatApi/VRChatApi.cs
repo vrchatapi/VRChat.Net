@@ -10,6 +10,7 @@ namespace VRChatApi
         public RemoteConfig RemoteConfig { get; set; }
         public UserApi UserApi { get; set; }
         public FriendsApi FriendsApi { get; set; }
+        public WorldApi WorldApi { get; set; }
 
         public VRChatApi(string username, string password)
         {
@@ -17,7 +18,8 @@ namespace VRChatApi
             RemoteConfig = new RemoteConfig();
             UserApi = new UserApi(username, password);
             FriendsApi = new FriendsApi();
-            
+            WorldApi = new WorldApi();
+
             // initialize http client
             // TODO: use the auth cookie
             if (Global.HttpClient == null)

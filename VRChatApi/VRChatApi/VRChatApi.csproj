@@ -48,12 +48,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\ConfigResponse.cs" />
+    <Compile Include="Classes\WorldBriefResponse.cs" />
+    <Compile Include="Classes\WorldEnums.cs" />
     <Compile Include="Classes\NotificationResponse.cs" />
     <Compile Include="Classes\UserBriefResponse.cs" />
     <Compile Include="Classes\UserResponse.cs" />
+    <Compile Include="Classes\WorldMetadataResponse.cs" />
+    <Compile Include="Classes\WorldResponse.cs" />
     <Compile Include="Endpoints\FriendsApi.cs" />
     <Compile Include="Endpoints\RemoteConfig.cs" />
     <Compile Include="Endpoints\UserApi.cs" />
+    <Compile Include="Endpoints\WorldApi.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="VRChatApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
