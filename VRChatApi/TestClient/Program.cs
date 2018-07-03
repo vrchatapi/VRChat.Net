@@ -34,6 +34,10 @@ namespace TestClient
             //List<WorldBriefResponse> scaryWorlds = await api.WorldApi.Search(keyword: "Scary", sort: SortOptions.Popularity);
             //List<WorldBriefResponse> featuredWorlds = await api.WorldApi.Search(featured: true);
             //WorldMetadataResponse metadata = await api.WorldApi.GetMetadata("wrld_b2d24c29-1ded-4990-a90d-dd6dcc440300");
+            /*if (world.instances.Count > 0)
+            {
+                WorldInstanceResponse worldInst = await api.WorldApi.GetInstance(world.id, world.instances[0].id);
+            }*/
         }
     }
 }
