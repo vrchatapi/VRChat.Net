@@ -26,10 +26,16 @@ namespace VRChatApi
             {
                 Global.HttpClient = new HttpClient();
                 Global.HttpClient.BaseAddress = new Uri("https://api.vrchat.cloud/api/1/");
-
-                string authEncoded = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{UserApi.Username}:{UserApi.Password}"));
-                Global.HttpClient.DefaultRequestHeaders.Add("Authorization", $"Basic {authEncoded}");
             }
+
+            string authEncoded = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{UserApi.Username}:{UserApi.Password}"));
+
+            var header = Global.HttpClient.DefaultRequestHeaders;
+            if (header.Contains("Authorization"))
+            {
+                header.Remove("Authorization");
+            }
+            header.Add("Authorization", $"Basic {authEncoded}");
         }
     }
 }
