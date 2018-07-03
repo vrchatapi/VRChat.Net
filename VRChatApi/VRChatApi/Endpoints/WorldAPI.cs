@@ -118,5 +118,35 @@ namespace VRChatApi.Endpoints
 
             return res;
         }
+
+        public async Task<WorldInstanceResponse> GetInstance(string worldId, string instanceId)
+        {
+            HttpResponseMessage response = await Global.HttpClient.GetAsync($"worlds/{worldId}/{instanceId}?apiKey={Global.ApiKey}");
+
+            WorldInstanceResponse res = null;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string text = await response.Content.ReadAsStringAsync();
+
+                var json = JObject.Parse(text);
+
+                res = new WorldInstanceResponse
+                {
+                    id = json["id"].ToString(),
+                    name = json["name"].ToString(),
+                    privateUsers = (json["private"] is JArray)
+                        ? json["private"].Select(tk => tk.ToObject<WorldInstanceUserResponse>()).ToList() : null,
+                    friends = (json["friends"] is JArray)
+                        ? json["friends"].Select(tk => tk.ToObject<WorldInstanceUserResponse>()).ToList() : null,
+                    users = (json["users"] is JArray)
+                        ? json["users"].Select(tk => tk.ToObject<WorldInstanceUserResponse>()).ToList() : null,
+                    hidden = (json["hidden"] == null || json["hidden"].Type == JTokenType.Null) ? null : json["hidden"].ToString(),
+                    nonce = (json["nonce"] == null) ? null : json["nonce"].ToString(),
+                };
+            }
+
+            return res;
+        }
     }
 }
