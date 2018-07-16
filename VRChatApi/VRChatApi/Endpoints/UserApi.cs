@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -27,7 +28,8 @@ namespace VRChatApi.Endpoints
 
             if (response.IsSuccessStatusCode)
             {
-                res = await response.Content.ReadAsAsync<UserResponse>();
+                string json = await response.Content.ReadAsStringAsync();
+                res = JsonConvert.DeserializeObject<UserResponse>(json);
             }
 
             return res;
