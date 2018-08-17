@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\ConfigResponse.cs" />
+    <Compile Include="Classes\PlayerModeratedResponse.cs" />
     <Compile Include="Classes\WorldBriefResponse.cs" />
     <Compile Include="Classes\WorldEnums.cs" />
     <Compile Include="Classes\NotificationResponse.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Classes\WorldMetadataResponse.cs" />
     <Compile Include="Classes\WorldResponse.cs" />
     <Compile Include="Endpoints\FriendsApi.cs" />
+    <Compile Include="Endpoints\ModerationsApi.cs" />
     <Compile Include="Endpoints\RemoteConfig.cs" />
     <Compile Include="Endpoints\UserApi.cs" />
     <Compile Include="Endpoints\WorldApi.cs" />
