@@ -67,6 +67,21 @@ namespace VRChatApi.Endpoints
             return res;
         }
 
+        public async Task<UserBriefResponse> GetById(string userId)
+        {
+            HttpResponseMessage response = await Global.HttpClient.GetAsync($"users/{userId}?apiKey={Global.ApiKey}");
+
+            UserBriefResponse res = null;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string json = await response.Content.ReadAsStringAsync();
+                res = JsonConvert.DeserializeObject<UserBriefResponse>(json);
+            }
+
+            return res;
+        }
+
         public async Task<UserResponse> UpdateInfo(string userId, string email = null, string birthday = null, string acceptedTOSVersion = null, List<string> tags = null)
         {
             JObject json = new JObject();
