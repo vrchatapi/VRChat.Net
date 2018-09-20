@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,14 +12,14 @@ namespace TestClient
     {
         static async Task Main(string[] args)
         {
-            VRChatApi.VRChatApi api = new VRChatApi.VRChatApi("avail", "");
+            VRChatApi.VRChatApi api = new VRChatApi.VRChatApi("username", "password");
 
             // remote config
             ConfigResponse config = await api.RemoteConfig.Get();
 
             // user api
-            UserResponse user = await api.UserApi.Login();
             //UserResponse userNew = await api.UserApi.Register("someName", "somePassword", "some@email.com");
+            UserResponse user = await api.UserApi.Login();
             //UserResponse userUpdated = await api.UserApi.UpdateInfo(user.id, null, null, null, new List<string>() { "admin_moderator", "admin_scripting_access", "system_avatar_access", "system_world_access" });
 
             // friends
@@ -29,15 +29,23 @@ namespace TestClient
             //await api.FriendsApi.AcceptFriend("usr_f8220fc0-e6f9-45ab-8d9f-ae00e8491685");
 
             // world api
-            WorldResponse world = await api.WorldApi.Get("wrld_b2d24c29-1ded-4990-a90d-dd6dcc440300");
+            var worldId = "wrld_b2d24c29-1ded-4990-a90d-dd6dcc440300"; // The great Pug
+            WorldResponse world = await api.WorldApi.Get(worldId);
             //List<WorldBriefResponse> starWorlds = await api.WorldApi.Search(WorldGroups.Favorite, count: 4);
-            //List<WorldBriefResponse> scaryWorlds = await api.WorldApi.Search(keyword: "Scary", sort: SortOptions.Popularity);
-            //List<WorldBriefResponse> featuredWorlds = await api.WorldApi.Search(featured: true);
-            //WorldMetadataResponse metadata = await api.WorldApi.GetMetadata("wrld_b2d24c29-1ded-4990-a90d-dd6dcc440300");
-            /*if (world.instances.Count > 0)
-            {
-                WorldInstanceResponse worldInst = await api.WorldApi.GetInstance(world.id, world.instances[0].id);
-            }*/
+            List<WorldBriefResponse> scaryWorlds = await api.WorldApi.Search(keyword: "Scary", sort: SortOptions.Popularity);
+            List<WorldBriefResponse> featuredWorlds = await api.WorldApi.Search(featured: true);
+            WorldMetadataResponse metadata = await api.WorldApi.GetMetadata(worldId);
+            var instances = new List<WorldInstanceResponse>();
+            if (world.instances.Count > 0) {
+                foreach(WorldInstance instance in world.instances)
+                {
+                    WorldInstanceResponse worldInst = await api.WorldApi.GetInstance(world.id, instance.id);
+                    instances.Add(worldInst);
+                }
+            }
+
+            // avatar api
+            AvatarResponse avatar = await api.AvatarApi.GetById("avtr_17036f54-f706-46bf-8a43-0c60564123ff");
         }
     }
 }
