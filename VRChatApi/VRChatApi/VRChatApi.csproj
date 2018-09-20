@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AvatarResponse.cs" />
     <Compile Include="Classes\ConfigResponse.cs" />
     <Compile Include="Classes\PlayerModeratedResponse.cs" />
     <Compile Include="Classes\WorldBriefResponse.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Classes\WorldInstanceUserResponse.cs" />
     <Compile Include="Classes\WorldMetadataResponse.cs" />
     <Compile Include="Classes\WorldResponse.cs" />
+    <Compile Include="Endpoints\AvatarApi.cs" />
     <Compile Include="Endpoints\FriendsApi.cs" />
     <Compile Include="Endpoints\ModerationsApi.cs" />
     <Compile Include="Endpoints\RemoteConfig.cs" />
