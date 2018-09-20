@@ -19,7 +19,6 @@ namespace VRChatApi.Endpoints
             if (response.IsSuccessStatusCode)
             {
                 res = await response.Content.ReadAsAsync<AvatarResponse>();
-                Console.WriteLine(await response.Content.ReadAsStringAsync());
             }
 
             return res;
