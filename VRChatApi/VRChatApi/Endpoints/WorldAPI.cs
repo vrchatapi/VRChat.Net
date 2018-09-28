@@ -5,6 +5,7 @@ using System.Text;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using VRChatApi.Classes;
 
@@ -21,8 +22,8 @@ namespace VRChatApi.Endpoints
 
             if (response.IsSuccessStatusCode)
             {
-                res = await response.Content.ReadAsAsync<WorldResponse>();
-
+                res = JsonConvert.DeserializeObject<WorldResponse>(await response.Content.ReadAsStringAsync());
+                
                 // Parse instances.
                 res.instances = res._instances.Select(data => new WorldInstance()
                 {
@@ -99,7 +100,7 @@ namespace VRChatApi.Endpoints
 
             if (response.IsSuccessStatusCode)
             {
-                res = await response.Content.ReadAsAsync<List<WorldBriefResponse>>();
+                res = JsonConvert.DeserializeObject<List<WorldBriefResponse>>(await response.Content.ReadAsStringAsync());
             }
 
             return res;
@@ -113,7 +114,7 @@ namespace VRChatApi.Endpoints
 
             if (response.IsSuccessStatusCode)
             {
-                res = await response.Content.ReadAsAsync<WorldMetadataResponse>();
+                res = JsonConvert.DeserializeObject<WorldMetadataResponse>(await response.Content.ReadAsStringAsync());
             }
 
             return res;

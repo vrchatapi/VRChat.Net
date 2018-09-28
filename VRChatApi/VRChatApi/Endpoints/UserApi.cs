@@ -61,7 +61,7 @@ namespace VRChatApi.Endpoints
 
             if (response.IsSuccessStatusCode)
             {
-                res = await response.Content.ReadAsAsync<UserResponse>();
+                res = JsonConvert.DeserializeObject<UserResponse>(await response.Content.ReadAsStringAsync());
             }
 
             return res;
@@ -108,7 +108,7 @@ namespace VRChatApi.Endpoints
 
             if (response.IsSuccessStatusCode)
             {
-                res = await response.Content.ReadAsAsync<UserResponse>();
+                res = JsonConvert.DeserializeObject<UserResponse>(await response.Content.ReadAsStringAsync());
             }
 
             return res;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using VRChatApi.Classes;
 
 namespace VRChatApi.Endpoints
@@ -18,7 +19,7 @@ namespace VRChatApi.Endpoints
 
             if (response.IsSuccessStatusCode)
             {
-                res = await response.Content.ReadAsAsync<AvatarResponse>();
+                res = JsonConvert.DeserializeObject<AvatarResponse>(await response.Content.ReadAsStringAsync());
             }
 
             return res;

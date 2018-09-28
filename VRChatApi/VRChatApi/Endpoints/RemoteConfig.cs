@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using VRChatApi.Classes;
 
 namespace VRChatApi.Endpoints
@@ -14,7 +15,7 @@ namespace VRChatApi.Endpoints
 
             if (response.IsSuccessStatusCode)
             {
-                res = await response.Content.ReadAsAsync<ConfigResponse>();
+                res = JsonConvert.DeserializeObject<ConfigResponse>(await response.Content.ReadAsStringAsync());
                 Global.ApiKey = res.clientApiKey;
             }
 
