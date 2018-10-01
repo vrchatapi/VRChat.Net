@@ -33,7 +33,7 @@ namespace VRChatApi.Tests
                 new JProperty("assetUrl", "https://unit.test/assetUrl.asset"),
                 new JProperty("pluginUrl", "https://unit.test/pluginUrl.plugin"),
                 new JProperty("unityPackageUrl", "https://unit.test/unityPackageUrl.unityPackage"),
-                new JProperty("namespacae", "some namespace presumably"),
+                new JProperty("namespace", "some namespace presumably"),
                 new JProperty("unityPackageUpdated", false),
                 new JProperty("unityPackages", new JArray(
                     new JObject(
