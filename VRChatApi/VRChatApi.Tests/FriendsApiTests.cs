@@ -66,7 +66,7 @@ namespace VRChatApi.Tests
             result.id.Should().Be("some id");
             result.type.Should().Be("friendrequest");
             result.senderUserId.Should().Be("some sender user id");
-            result.recieverUserId.Should().Be("some receiver user id");
+            result.receiverUserId.Should().Be("some receiver user id");
             result.message.Should().Be("some message");
             result.details.Should().BeEmpty();
             result.jobName.Should().Be("some job name");
