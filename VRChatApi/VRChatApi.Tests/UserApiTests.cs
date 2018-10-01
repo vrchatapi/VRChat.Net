@@ -51,7 +51,7 @@ namespace VRChatApi.Tests
                 new JProperty("statusDescription", "some status description"),
                 new JProperty("acceptedTOSVersion", 6),
                 new JProperty("steamDetails", new JObject()),
-                new JProperty("hasLoggedFromClient", true),
+                new JProperty("hasLoggedInFromClient", true),
                 new JProperty("homeLocation", "some home location"),
                 new JProperty("tags", new JArray("tag 1", "tag 2")),
                 new JProperty("developerType", "none")
@@ -133,7 +133,7 @@ namespace VRChatApi.Tests
                 new JProperty("statusDescription", "some status description"),
                 new JProperty("acceptedTOSVersion", 6),
                 new JProperty("steamDetails", new JObject()),
-                new JProperty("hasLoggedFromClient", true),
+                new JProperty("hasLoggedInFromClient", true),
                 new JProperty("homeLocation", "some home location"),
                 new JProperty("tags", new JArray("tag 1", "tag 2")),
                 new JProperty("developerType", "none")
@@ -265,7 +265,7 @@ namespace VRChatApi.Tests
                 new JProperty("statusDescription", "some status description"),
                 new JProperty("acceptedTOSVersion", 6),
                 new JProperty("steamDetails", new JObject()),
-                new JProperty("hasLoggedFromClient", true),
+                new JProperty("hasLoggedInFromClient", true),
                 new JProperty("homeLocation", "some home location"),
                 new JProperty("tags", new JArray("tag 1", "tag 2")),
                 new JProperty("developerType", "none")
