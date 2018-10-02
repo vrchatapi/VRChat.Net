@@ -1,4 +1,7 @@
 ﻿using System.Net.Http;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("VRChatApi.Tests")]
 
 namespace VRChatApi
 {

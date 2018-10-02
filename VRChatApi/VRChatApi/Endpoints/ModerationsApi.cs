@@ -15,7 +15,7 @@ namespace VRChatApi.Endpoints
         {
             HttpResponseMessage response = await Global.HttpClient.GetAsync("auth/user/playermoderations");
 
-            List<PlayerModeratedResponse> res = new List<PlayerModeratedResponse>();
+            List<PlayerModeratedResponse> res = null;
 
             if (response.IsSuccessStatusCode)
             {
@@ -29,7 +29,7 @@ namespace VRChatApi.Endpoints
         {
             HttpResponseMessage response = await Global.HttpClient.GetAsync("auth/user/playermoderated");
 
-            List<PlayerModeratedResponse> res = new List<PlayerModeratedResponse>();
+            List<PlayerModeratedResponse> res = null;
 
             if (response.IsSuccessStatusCode)
             {
