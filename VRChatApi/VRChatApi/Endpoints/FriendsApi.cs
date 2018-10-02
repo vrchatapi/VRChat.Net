@@ -6,20 +6,27 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using VRChatApi.Classes;
+using VRChatApi.Logging;
 
 namespace VRChatApi.Endpoints
 {
     public class FriendsApi
     {
+        private static readonly ILog Logger = LogProvider.GetCurrentClassLogger();
+
         public async Task<List<UserBriefResponse>> Get(int offset = 0, int count = 20, bool offline = false)
         {
+            Logger.Debug(() => $"Getting friends with {nameof(offset)} = {offset}, {nameof(count)} = {count}, {nameof(offline)} = {offline}");
+
             HttpResponseMessage response = await Global.HttpClient.GetAsync($"auth/user/friends?apiKey={Global.ApiKey}&offset={offset}&n={count}&offline={offline.ToString().ToLowerInvariant()}");
 
             List<UserBriefResponse> res = null;
 
             if (response.IsSuccessStatusCode)
             {
-                res = JsonConvert.DeserializeObject<List<UserBriefResponse>>(await response.Content.ReadAsStringAsync());
+                var json = await response.Content.ReadAsStringAsync();
+                Logger.Debug(() => $"JSON received: {json}");
+                res = JsonConvert.DeserializeObject<List<UserBriefResponse>>(json);
             }
 
             return res;
@@ -27,21 +34,27 @@ namespace VRChatApi.Endpoints
 
         public async Task<NotificationResponse> SendRequest(string userId, string fromWho)
         {
+            Logger.Debug(() => $"Sending friend request to {userId} from {fromWho}");
             JObject json = new JObject();
             json["type"] = "friendrequest";
             json["message"] = $"{fromWho} wants to be your friend";
+
+            Logger.Debug(() => $"Prepared JSON to post: {json}");
 
             StringContent content = new StringContent(json.ToString(), Encoding.UTF8);
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             HttpResponseMessage response = await Global.HttpClient.PostAsync($"user/{userId}/notification?apiKey={Global.ApiKey}", content);
+            
 
             NotificationResponse res = null;
 
             if (response.IsSuccessStatusCode)
             {
-                res = JsonConvert.DeserializeObject<NotificationResponse>(await response.Content.ReadAsStringAsync());
+                var receivedJson = await response.Content.ReadAsStringAsync();
+                Logger.Debug(() => $"JSON received: {receivedJson}");
+                res = JsonConvert.DeserializeObject<NotificationResponse>(receivedJson);
             }
 
             return res;
@@ -56,7 +69,9 @@ namespace VRChatApi.Endpoints
 
             if (response.IsSuccessStatusCode)
             {
-                res = await response.Content.ReadAsStringAsync();
+                var json = await response.Content.ReadAsStringAsync();
+                Logger.Debug(() => $"JSON received: {json}");
+                res = json;
             }
 
             return res;

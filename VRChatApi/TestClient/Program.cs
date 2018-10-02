@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VRChatApi;
@@ -13,6 +12,7 @@ namespace TestClient
         static async Task Main(string[] args)
         {
             VRChatApi.VRChatApi api = new VRChatApi.VRChatApi("username", "password");
+            VRChatApi.Logging.LogProvider.SetCurrentLogProvider(new ColoredConsoleLogProvider());
 
             // remote config
             ConfigResponse config = await api.RemoteConfig.Get();
