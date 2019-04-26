@@ -31,5 +31,50 @@ namespace VRChatApi.Endpoints
 
             return res;
         }
+
+        public async Task<List<AvatarResponse>> Personal()
+        {
+            HttpResponseMessage response = await Global.HttpClient.GetAsync($"avatars?apiKey={Global.ApiKey}&releaseStatus=all&user=me");
+            List<AvatarResponse> res = null;
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                Logger.Debug(() => $"JSON received: {json}");
+
+                res = JsonConvert.DeserializeObject<List<AvatarResponse>>(json);
+            }
+
+            return res;
+        }
+
+        public async Task<List<AvatarResponse>> List()
+        {
+            HttpResponseMessage response = await Global.HttpClient.GetAsync($"avatars?apiKey={Global.ApiKey}");
+            List<AvatarResponse> res = null;
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                Logger.Debug(() => $"JSON received: {json}");
+
+                res = JsonConvert.DeserializeObject<List<AvatarResponse>>(json);
+            }
+
+            return res;
+        }
+
+        public async Task<List<AvatarResponse>> Favorites()
+        {
+            HttpResponseMessage response = await Global.HttpClient.GetAsync($"avatars/favorites?apiKey={Global.ApiKey}");
+            List<AvatarResponse> res = null;
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                Logger.Debug(() => $"JSON received: {json}");
+
+                res = JsonConvert.DeserializeObject<List<AvatarResponse>>(json);
+            }
+
+            return res;
+        }
     }
 }
