@@ -36,7 +36,11 @@ namespace VRChatApi.Endpoints
             {
                 string json = await response.Content.ReadAsStringAsync();
                 Logger.Debug(() => $"JSON received: {json}");
+                try {
                 res = JsonConvert.DeserializeObject<UserResponse>(json);
+                } catch {
+                    res = (UserResponse)JsonConvert.DeserializeObject<Response>(json);
+                }
             }
 
             return res;

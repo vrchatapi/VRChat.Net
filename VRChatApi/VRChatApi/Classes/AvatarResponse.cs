@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VRChatApi.Classes
 {
-    public class AvatarResponse
+    public class AvatarResponse : Response
     {
         public string id { get; set; }
         public string name { get; set; }

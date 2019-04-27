@@ -2,7 +2,7 @@
 
 namespace VRChatApi.Classes
 {
-    public class UserBriefResponse
+    public class UserBriefResponse : Response
     {
         public string id { get; set; }
         public string username { get; set; }
