@@ -8,30 +8,32 @@ namespace VRChatApi.Classes
     public class Response
     {
         public object Content { get; set; }
-        public StatusMessage Status { get; set; }
-        public class StatusMessage
-        {
-                public string Message { get; set; }
-                public System.Net.HttpStatusCode StatusCode { get; set; }
-                public StatusMessage(string message, int statusCode)
-                {
-                    Message = message;
-                    StatusCode = (System.Net.HttpStatusCode)statusCode;
-                }
+        public object Status { get; set; }
+        public Response(object content, object status) {
+            Content = content; Status = status;
         }
     }
-    public class BanResponse : Response
+    public class ErrorResponse
     {
-        public bool Banned { get { return (Reason != null) ? true : false; } }
-        public string Reason { get; set; }
-        [JsonProperty(PropertyName = "expires")]
-        private string _expires { get;  set; }
-        [JsonIgnore]
-        public DateTime Expires { get { return Convert.ToDateTime(_expires); } }
-        public BanResponse(string reason, string expires)
+        public ErrorMessage Error { get; set; }
+        public class ErrorMessage
         {
-            Reason = reason;
-            // Expires = Convert.ToDateTime(_expires);
+                public string Message { get; set; }
+                public int status_code { get; set; }
+                [JsonIgnore]
+                public System.Net.HttpStatusCode StatusCode { get { return (System.Net.HttpStatusCode)status_code; } }
         }
+    }
+    public class BanResponse : ErrorResponse
+    {
+        [JsonIgnore]
+        public bool Banned { get { return (ExpiresAt < DateTime.Now) ? true : false; } }
+        public string Target { get; set; }
+        public string Reason { get; set; }
+        public string Expires { get;  set; }
+        [JsonIgnore]
+        public DateTime ExpiresAt { get { return Convert.ToDateTime(Expires); } }
+        [JsonIgnore]
+        public TimeSpan ExpiresIn { get { return ExpiresAt - DateTime.Now; } }
     }
 }

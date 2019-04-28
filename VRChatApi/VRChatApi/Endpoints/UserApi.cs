@@ -29,21 +29,17 @@ namespace VRChatApi.Endpoints
         {
             Logger.Trace(() => "Getting current user details");
             HttpResponseMessage response = await Global.HttpClient.GetAsync($"auth/user?apiKey={Global.ApiKey}");
-
             UserResponse res = null;
-
             if (response.IsSuccessStatusCode)
             {
                 string json = await response.Content.ReadAsStringAsync();
                 Logger.Debug(() => $"JSON received: {json}");
-                try {
                 res = JsonConvert.DeserializeObject<UserResponse>(json);
-                } catch {
-                    res = (UserResponse)JsonConvert.DeserializeObject<Response>(json);
-                }
             }
-
-            return res;
+            UserResponse result = new UserResponse();
+            result.Raw = response;
+            if (res != null) result = res;
+            return result;
         }
 
         public async Task<UserResponse> Register(string username, string password, string email, string birthday = null, string acceptedTOSVersion = null)
@@ -124,7 +120,10 @@ namespace VRChatApi.Endpoints
 
             HttpResponseMessage response = await Global.HttpClient.PutAsync($"users/{userId}?apiKey={Global.ApiKey}", content);
 
-            UserResponse res = null;
+            UserResponse res = new UserResponse();
+            res.Raw = response;
+
+            // res = await VRChatApi.ParseResponseAsync(response);
 
             if (response.IsSuccessStatusCode)
             {

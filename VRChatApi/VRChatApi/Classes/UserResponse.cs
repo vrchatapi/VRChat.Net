@@ -1,5 +1,7 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Net.Http;
 
 namespace VRChatApi.Classes
 {
@@ -27,5 +29,8 @@ namespace VRChatApi.Classes
         public JObject steamDetails { get; set; }
         public bool hasLoggedInFromClient { get; set; }
         public string authToken { get; set; }
+        /*public UserResponse(HttpResponseMessage raw = null) {
+            if (raw != null) Raw = raw;
+        }*/
     }
 }

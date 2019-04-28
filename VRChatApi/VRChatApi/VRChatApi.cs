@@ -51,5 +51,18 @@ namespace VRChatApi
             header.Add("Authorization", $"Basic {authEncoded}");
             Logger.Trace(() => $"Added new Authorization header");
         }
+
+        /*public static async System.Threading.Tasks.Task<object> ParseResponseAsync(HttpResponseMessage response, Type Class = null)
+        {
+            Object theObject = Activator.CreateInstance(Class);
+            var test = new Class();
+            if (response.IsSuccessStatusCode)
+            {
+                var receivedJson = await response.Content.ReadAsStringAsync();
+                Logger.Debug(() => $"JSON received: {receivedJson}");
+                res = JsonConvert.DeserializeObject<UserResponse>(receivedJson);
+            }
+            return theObject;
+        }*/
     }
 }

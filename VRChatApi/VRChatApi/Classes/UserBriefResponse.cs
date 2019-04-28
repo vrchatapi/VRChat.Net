@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Net.Http;
 
 namespace VRChatApi.Classes
 {
-    public class UserBriefResponse : Response
+    public class UserBriefResponse
     {
         public string id { get; set; }
         public string username { get; set; }
@@ -16,5 +18,7 @@ namespace VRChatApi.Classes
         public string location { get; set; }
         public string worldId { get; set; }
         public string instanceId { get; set; }
+        [JsonIgnore]
+        public HttpResponseMessage Raw { get; set; }
     }
 }

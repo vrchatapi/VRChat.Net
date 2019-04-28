@@ -14,20 +14,20 @@ namespace VRChatApi.Endpoints
     {
         private static readonly ILog Logger = LogProvider.GetCurrentClassLogger();
 
-        public async Task<BanResponse> Get(int offset = 0, int count = 100, bool offline = false)
+        public async Task<List<UserBriefResponse>> Get(int offset = 0, int count = 100, bool offline = false)
         {
             Logger.Debug(() => $"Getting friends with {nameof(offset)} = {offset}, {nameof(count)} = {count}, {nameof(offline)} = {offline}");
 
             HttpResponseMessage response = await Global.HttpClient.GetAsync($"auth/user/friends?apiKey={Global.ApiKey}&offset={offset}&n={count}&offline={offline.ToString().ToLowerInvariant()}");
 
-            BanResponse res = null;
+            List<UserBriefResponse> res = null;
 
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
                 Logger.Debug(() => $"JSON received: {json}");
-                try { res = JsonConvert.DeserializeObject<BanResponse>(json); } catch (System.Exception ex) { System.Console.WriteLine(ex.Message); }
-                try { res.Content = JsonConvert.DeserializeObject<List<UserBriefResponse>>(json); } catch (System.Exception ex) { System.Console.WriteLine(ex.Message); }
+                // try { res = JsonConvert.DeserializeObject<BanResponse>(json); } catch (System.Exception ex) { System.Console.WriteLine(ex.Message); }
+                try { res = JsonConvert.DeserializeObject<List<UserBriefResponse>>(json); } catch (System.Exception ex) { System.Console.WriteLine(ex.Message); }
             }
 
             return res;
