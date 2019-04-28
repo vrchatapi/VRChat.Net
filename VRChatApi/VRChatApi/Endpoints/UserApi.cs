@@ -78,6 +78,22 @@ namespace VRChatApi.Endpoints
             return res;
         }
 
+        public async Task<List<UserBriefResponse>> Search(string pattern, int limit = 100, int offset = 0)
+        {
+            HttpResponseMessage response = await Global.HttpClient.GetAsync($"users/?apiKey={Global.ApiKey}&n={limit}&offset={offset}&search={pattern}");
+
+            List<UserBriefResponse> res = null;
+
+            if (response.IsSuccessStatusCode)
+            {
+                string json = await response.Content.ReadAsStringAsync();
+                Logger.Debug(() => $"JSON received: {json}");
+                res = JsonConvert.DeserializeObject<List<UserBriefResponse>>(json);
+            }
+
+            return res;
+        }
+
         public async Task<UserBriefResponse> GetById(string userId)
         {
             Logger.Debug(() => $"Getting user info with ID: {userId}");

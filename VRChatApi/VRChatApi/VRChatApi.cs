@@ -16,6 +16,7 @@ namespace VRChatApi
         public WorldApi WorldApi { get; set; }
         public ModerationsApi ModerationsApi { get; set; }
         public AvatarApi AvatarApi { get; set; }
+        public NotificationsAPI NotificationsAPI { get; set; }
 
         public VRChatApi(string username, string password)
         {
@@ -29,6 +30,7 @@ namespace VRChatApi
             WorldApi = new WorldApi();
             ModerationsApi = new ModerationsApi();
             AvatarApi = new AvatarApi();
+            NotificationsAPI = new NotificationsAPI();
 
             // initialize http client
             // TODO: use the auth cookie
