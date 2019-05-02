@@ -69,18 +69,17 @@ namespace VRChatApi.Endpoints
             return res;
         }
 
-        public async Task<string> UnblockUser(string userId, string modId)
+        public async Task<Response> UnblockUser(string userId)
         {
-            HttpResponseMessage response = await Global.HttpClient.DeleteAsync($"user/{userId}/moderations/{modId}?apiKey={Global.ApiKey}");
-            string res = "";
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                Logger.Debug(() => $"JSON received: {json}");
-                res = json;
-            }
+            JObject json_out = new JObject();
+            json_out["moderated "] = userId;
+            json_out["type"] = "block";
+            Console.WriteLine($"Prepared JSON to put: {json_out}");
+            StringContent content = new StringContent(json_out.ToString(), Encoding.UTF8);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            HttpResponseMessage response = await Global.HttpClient.PutAsync($"auth/user/unplayermoderate?apiKey={Global.ApiKey}", content);
+            Response res = await new Response().FromResponseMessageAsync(response);
             return res;
         }
-
     }
 }
