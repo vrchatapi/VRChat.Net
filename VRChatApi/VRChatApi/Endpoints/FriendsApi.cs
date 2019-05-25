@@ -114,5 +114,35 @@ namespace VRChatApi.Endpoints
 
             return res;*/
         }
+
+        public async Task<NotificationResponse> SendMessage(string userId, string message, string hiddenMessage = "")
+        {
+            JObject json = new JObject();
+            json["type"] = "invite";
+            json["message"] = hiddenMessage;
+            json["details"] = new JObject();
+            json["details"]["worldId"] = "";
+            json["details"]["worldName"] = message;
+
+            Logger.Debug(() => $"Prepared JSON to post: {json}");
+
+            StringContent content = new StringContent(json.ToString(), Encoding.UTF8);
+
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            HttpResponseMessage response = await Global.HttpClient.PostAsync($"user/{userId}/notification?apiKey={Global.ApiKey}", content);
+            
+
+            NotificationResponse res = null;
+
+            if (response.IsSuccessStatusCode)
+            {
+                var receivedJson = await response.Content.ReadAsStringAsync();
+                Logger.Debug(() => $"JSON received: {receivedJson}");
+                res = JsonConvert.DeserializeObject<NotificationResponse>(receivedJson);
+            }
+
+            return res;
+        }
     }
 }
