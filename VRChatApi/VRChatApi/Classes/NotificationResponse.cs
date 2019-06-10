@@ -18,7 +18,7 @@ namespace VRChatApi.Classes
         public string SenderUsername { get; set; }
         public string ReceiverUserId { get; set; }
         public string Message { get; set; }
-        public NotificationDetails Details { get; set; } // unknown
+        public string Details { get; set; } // unknown
         [JsonProperty(PropertyName = "created_at")]
         public string Created { get; set; }
         [JsonIgnore]
@@ -29,6 +29,10 @@ namespace VRChatApi.Classes
         [Obsolete("Typoed property, use receiverUserId instead")]
         [JsonIgnore]
         public string recieverUserId { get => ReceiverUserId; set => ReceiverUserId = value; }
+    }
+    public class NotificationResponseWithDetails : NotificationResponse
+    {
+        public NotificationDetails Details { get; set; }
     }
     public class NotificationResponseWithSeen : NotificationResponse
     {

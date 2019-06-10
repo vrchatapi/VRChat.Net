@@ -115,8 +115,7 @@ namespace VRChatApi.Endpoints
             return res;*/
         }
 
-        public async Task<NotificationResponse> SendMessage(string userId, string message, string hiddenMessage = "")
-        {
+        public async Task<NotificationResponseWithDetails> SendMessage(string userId, string message, string hiddenMessage = "") {
             JObject json = new JObject();
             json["type"] = "invite";
             json["message"] = hiddenMessage;
@@ -124,22 +123,24 @@ namespace VRChatApi.Endpoints
             json["details"]["worldId"] = "";
             json["details"]["worldName"] = message;
 
-            Logger.Debug(() => $"Prepared JSON to post: {json}");
+            Console.WriteLine($"Prepared JSON to post: {json}");
 
             StringContent content = new StringContent(json.ToString(), Encoding.UTF8);
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
+            Console.WriteLine($"Prepared StringContent to post: {content}");
+
             HttpResponseMessage response = await Global.HttpClient.PostAsync($"user/{userId}/notification?apiKey={Global.ApiKey}", content);
             
 
-            NotificationResponse res = null;
+            NotificationResponseWithDetails res = null;
 
             if (response.IsSuccessStatusCode)
             {
                 var receivedJson = await response.Content.ReadAsStringAsync();
-                Logger.Debug(() => $"JSON received: {receivedJson}");
-                res = JsonConvert.DeserializeObject<NotificationResponse>(receivedJson);
+                Console.WriteLine($"JSON received: {receivedJson}");
+                res = JsonConvert.DeserializeObject<NotificationResponseWithDetails>(receivedJson);
             }
 
             return res;
