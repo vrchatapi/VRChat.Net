@@ -48,7 +48,7 @@ namespace VRChatApi.Endpoints
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             HttpResponseMessage response = await Global.HttpClient.PostAsync($"user/{userId}/notification?apiKey={Global.ApiKey}", content);
-            
+
 
             NotificationResponse res = null;
 
@@ -115,13 +115,14 @@ namespace VRChatApi.Endpoints
             return res;*/
         }
 
-        public async Task<NotificationResponseWithDetails> SendMessage(string userId, string message, string hiddenMessage = "") {
+        public async Task<NotificationResponseWithDetails> SendInvite(string userId, string worldInstanceId = "", string worldName = "my world", string hiddenMessage = "")
+        {
             JObject json = new JObject();
             json["type"] = "invite";
             json["message"] = hiddenMessage;
             json["details"] = new JObject();
-            json["details"]["worldId"] = "";
-            json["details"]["worldName"] = message;
+            json["details"]["worldId"] = worldInstanceId;
+            json["details"]["worldName"] = worldName;
 
             Console.WriteLine($"Prepared JSON to post: {json}");
 
@@ -132,7 +133,7 @@ namespace VRChatApi.Endpoints
             Console.WriteLine($"Prepared StringContent to post: {content}");
 
             HttpResponseMessage response = await Global.HttpClient.PostAsync($"user/{userId}/notification?apiKey={Global.ApiKey}", content);
-            
+
 
             NotificationResponseWithDetails res = null;
 
@@ -145,5 +146,7 @@ namespace VRChatApi.Endpoints
 
             return res;
         }
+
+        public async Task<NotificationResponseWithDetails> SendMessage(string userId, string message, string hiddenMessage = "") => await SendInvite(userId, worldName: message, hiddenMessage: hiddenMessage);
     }
 }
