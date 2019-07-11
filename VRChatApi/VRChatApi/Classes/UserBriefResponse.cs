@@ -6,6 +6,8 @@ namespace VRChatApi.Classes
 {
     public class UserBriefResponse
     {
+        [JsonIgnore]
+        public bool Offline { get; set; }
         public string id { get; set; }
         public string username { get; set; }
         public string displayName { get; set; }
