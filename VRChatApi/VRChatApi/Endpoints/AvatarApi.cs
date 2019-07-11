@@ -34,7 +34,7 @@ namespace VRChatApi.Endpoints
 
         public async Task<List<AvatarResponse>> Personal()
         {
-            HttpResponseMessage response = await Global.HttpClient.GetAsync($"avatars?apiKey={Global.ApiKey}&releaseStatus=all&user=me");
+            HttpResponseMessage response = await Global.HttpClient.GetAsync($"avatars?apiKey={Global.ApiKey}&releaseStatus=all&user=me&n=100");
             List<AvatarResponse> res = null;
             if (response.IsSuccessStatusCode)
             {
@@ -64,7 +64,7 @@ namespace VRChatApi.Endpoints
 
         public async Task<List<AvatarResponse>> Favorites()
         {
-            HttpResponseMessage response = await Global.HttpClient.GetAsync($"avatars/favorites?apiKey={Global.ApiKey}?n=16");
+            HttpResponseMessage response = await Global.HttpClient.GetAsync($"avatars/favorites?apiKey={Global.ApiKey}&n=16");
             List<AvatarResponse> res = null;
             if (response.IsSuccessStatusCode)
             {
