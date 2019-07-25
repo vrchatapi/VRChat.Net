@@ -4,6 +4,40 @@ using System.Net.Http;
 
 namespace VRChatApi.Classes
 {
+    public class UserStatus
+    {
+        public enum Status
+        {
+            Unknown, Offline, Busy, Active, JoinMe
+        }
+        public Status FromString(string status)
+        {
+            switch (status.ToLowerInvariant())
+            {
+                case "join me":
+                    return Status.JoinMe;
+                case "active":
+                    return Status.Active;
+                case "busy":
+                    return Status.Busy;
+                case "offline":
+                    return Status.Offline;
+                default:
+                    return Status.Unknown;
+            }
+        }
+        public string ToString(Status status)
+        {
+            switch (status)
+            {
+                case Status.Offline: return "offline";
+                case Status.Busy: return "busy";
+                case Status.Active: return "active";
+                case Status.JoinMe: return "join me";
+                default: return "";
+            }
+        }
+    }
     public class UserBriefResponse
     {
         [JsonIgnore]

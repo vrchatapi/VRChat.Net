@@ -87,9 +87,9 @@ namespace VRChatApi.Endpoints
             }
             return res;
         }
-        public async Task<UserResponse> UpdateInfo(string userId, string email = null, string birthday = null, string acceptedTOSVersion = null, List<string> tags = null)
+        public async Task<UserResponse> UpdateInfo(string userId, string email = null, string birthday = null, string acceptedTOSVersion = null, List<string> tags = null, string status = null, string statusDescription = null)
         {
-            Logger.Debug(() => $"Updating user info for {nameof(userId)} = {userId} with {nameof(email)} = {email}, {nameof(birthday)} = {birthday}, {nameof(acceptedTOSVersion)} = {acceptedTOSVersion}, {nameof(tags)} = {tags}");
+            Logger.Debug(() => $"Updating user info for {nameof(userId)} = {userId} with {nameof(email)} = {email}, {nameof(birthday)} = {birthday}, {nameof(acceptedTOSVersion)} = {acceptedTOSVersion}, {nameof(tags)} = {tags}, {nameof(status)} = {status}, {nameof(statusDescription)} = {statusDescription}");
             JObject json = new JObject();
             if (email != null)
                 json["email"] = email;
@@ -99,6 +99,10 @@ namespace VRChatApi.Endpoints
                 json["acceptedTOSVersion"] = acceptedTOSVersion;
             if (tags != null)
                 json["tags"] = JToken.FromObject(tags);
+            if (status != null)
+                json["status"] = status;
+            if (statusDescription != null)
+                json["statusDescription"] = statusDescription;
             Logger.Debug(() => $"Prepared JSON to put: {json}");
             StringContent content = new StringContent(json.ToString(), Encoding.UTF8);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
