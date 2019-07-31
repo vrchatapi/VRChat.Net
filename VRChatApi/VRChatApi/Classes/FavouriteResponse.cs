@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+
+#pragma warning disable IDE1006
 
 namespace VRChatApi.Classes
 {

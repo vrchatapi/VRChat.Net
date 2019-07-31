@@ -68,10 +68,9 @@ namespace VRChatApi.Tests
             result.unityPackages.Should().HaveCount(1);
             result.unityPackages[0].assetUrl.Should().Be("https://unit.test/assetUrl");
             result.unityPackages[0].assetVersion.Should().Be(1);
-            result.unityPackages[0].createdTime.Should().Be("2018-07-23T16:35:24.397Z");
+            result.unityPackages[0].created_at.Should().Be(new DateTime());
             result.unityPackages[0].id.Should().Be("unp_6e3fd8ac-cbc1-454b-97ca-af2f7d62e88e");
             result.unityPackages[0].platform.Should().Be("standalonewindows");
-            result.unityPackages[0].pluginUrl.Should().BeNull();
             result.unityPackages[0].unitySortNumber.Should().Be(50603010);
             result.unityPackages[0].unityVersion.Should().Be("5.6.3p1");
             result.version.Should().Be(4);

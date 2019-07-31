@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using FluentAssertions;
 using Newtonsoft.Json.Linq;
+using VRChatApi.Classes;
 using VRChatApi.Endpoints;
 using VRChatApi.Tests.Mocks;
 using Xunit;
@@ -68,7 +69,7 @@ namespace VRChatApi.Tests
             result.senderUserId.Should().Be("some sender user id");
             result.receiverUserId.Should().Be("some receiver user id");
             result.message.Should().Be("some message");
-            result.details.Should().BeEmpty();
+            result.details.Should().Be(new Details());
             result.jobName.Should().Be("some job name");
             result.jobColor.Should().Be("some job color");
         }
@@ -98,7 +99,7 @@ namespace VRChatApi.Tests
             var api = new FriendsApi();
             var result = api.DeleteFriend("some user id").Result;
 
-            result.Should().NotBeNullOrEmpty();
+            result.Should().BeTrue();
         }
 
         [Fact]
@@ -111,7 +112,7 @@ namespace VRChatApi.Tests
             var api = new FriendsApi();
             var result = api.DeleteFriend("some user id").Result;
 
-            result.Should().NotBeNullOrEmpty();
+            result.Should().BeFalse();
         }
     }
 }

@@ -34,7 +34,7 @@ namespace VRChatApi.Tests
             result[0].sourceDisplayName.Should().Be("my display name");
             result[0].targetUserId.Should().Be("target user id");
             result[0].targetDisplayName.Should().Be("target display name");
-            result[0].created.Should().Be("some timestamp");
+            result[0].created.Should().Be(new DateTime());
         }
 
         [Fact]
@@ -69,7 +69,7 @@ namespace VRChatApi.Tests
             result[0].sourceDisplayName.Should().Be("source display name");
             result[0].targetUserId.Should().Be("my user id");
             result[0].targetDisplayName.Should().Be("my display name");
-            result[0].created.Should().Be("some timestamp");
+            result[0].created.Should().Be(new DateTime());
         }
 
         [Fact]

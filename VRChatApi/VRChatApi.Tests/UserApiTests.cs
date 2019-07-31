@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using FluentAssertions;
 using Newtonsoft.Json.Linq;
+using VRChatApi.Classes;
 using VRChatApi.Endpoints;
 using VRChatApi.Tests.Mocks;
 using Xunit;
@@ -77,8 +78,6 @@ namespace VRChatApi.Tests
             result.friends[0].Should().Be("friend 1");
             result.friends[1].Should().Be("friend 2");
             //result.friendGroupName.Should().Be("some friend group name");
-            result.blueprints.Should().BeEmpty();
-            result.currentAvatarBlueprint.Should().BeEmpty();
             result.currentAvatar.Should().Be("some current user avatar ID");
             result.currentAvatarImageUrl.Should().Be("https://unit.test/currentAvatarImageUrl.jpg");
             result.currentAvatarAssetUrl.Should().Be("https://unit.test/currentAvatarAssetUrl.jpg");
@@ -86,7 +85,7 @@ namespace VRChatApi.Tests
             result.status.Should().Be("some status");
             result.statusDescription.Should().Be("some status description");
             result.acceptedTOSVersion.Should().Be(6);
-            result.steamDetails.Should().BeEmpty();
+            result.steamDetails.Should().Be(new SteamDetails());
             result.hasLoggedInFromClient.Should().BeTrue();
             result.tags.Should().HaveCount(2);
             result.tags[0].Should().Be("tag 1");
@@ -159,8 +158,6 @@ namespace VRChatApi.Tests
             result.friends[0].Should().Be("friend 1");
             result.friends[1].Should().Be("friend 2");
             //result.friendGroupName.Should().Be("some friend group name");
-            result.blueprints.Should().BeEmpty();
-            result.currentAvatarBlueprint.Should().BeEmpty();
             result.currentAvatar.Should().Be("some current user avatar ID");
             result.currentAvatarImageUrl.Should().Be("https://unit.test/currentAvatarImageUrl.jpg");
             result.currentAvatarAssetUrl.Should().Be("https://unit.test/currentAvatarAssetUrl.jpg");
@@ -168,7 +165,7 @@ namespace VRChatApi.Tests
             result.status.Should().Be("some status");
             result.statusDescription.Should().Be("some status description");
             result.acceptedTOSVersion.Should().Be(6);
-            result.steamDetails.Should().BeEmpty();
+            result.steamDetails.Should().Be(new SteamDetails());
             result.hasLoggedInFromClient.Should().BeTrue();
             result.tags.Should().HaveCount(2);
             result.tags[0].Should().Be("tag 1");
@@ -222,8 +219,6 @@ namespace VRChatApi.Tests
             result.status.Should().Be("some status");
             result.statusDescription.Should().Be("some status description");
             result.location.Should().Be("some location");
-            result.worldId.Should().Be("some world id");
-            result.instanceId.Should().Be("some instance id");
         }
 
         [Fact]
@@ -291,8 +286,6 @@ namespace VRChatApi.Tests
             result.friends[0].Should().Be("friend 1");
             result.friends[1].Should().Be("friend 2");
             //result.friendGroupName.Should().Be("some friend group name");
-            result.blueprints.Should().BeEmpty();
-            result.currentAvatarBlueprint.Should().BeEmpty();
             result.currentAvatar.Should().Be("some current user avatar ID");
             result.currentAvatarImageUrl.Should().Be("https://unit.test/currentAvatarImageUrl.jpg");
             result.currentAvatarAssetUrl.Should().Be("https://unit.test/currentAvatarAssetUrl.jpg");
@@ -300,7 +293,7 @@ namespace VRChatApi.Tests
             result.status.Should().Be("some status");
             result.statusDescription.Should().Be("some status description");
             result.acceptedTOSVersion.Should().Be(6);
-            result.steamDetails.Should().BeEmpty();
+            result.steamDetails.Should().Be(new SteamDetails());
             result.hasLoggedInFromClient.Should().BeTrue();
             result.tags.Should().HaveCount(2);
             result.tags[0].Should().Be("tag 1");

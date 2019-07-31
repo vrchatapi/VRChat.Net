@@ -1,27 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Converters;
 
+#pragma warning disable IDE1006
+
 namespace VRChatApi.Classes
 {
-    public class UnityPackage
-    {
-        public string id { get; set; }
-        public string assetUrl { get; set; }
-        public string pluginUrl { get; set; }
-        public string unityVersion { get; set; }
-        public int unitySortNumber { get; set; }
-        public int assetVersion { get; set; }
-        public string platform { get; set; }
-        [JsonProperty(PropertyName = "created_at")]
-        public string createdTime { get; set; }
-    }
-
     public class WorldInstance
     {
         public string id { get; set; }
