@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using VRChatApi.Classes;
 using VRChatApi.Logging;
 
@@ -20,24 +19,18 @@ namespace VRChatApi.Endpoints
 
             HttpResponseMessage response = await Global.HttpClient.GetAsync($"auth/user/friends?apiKey={Global.ApiKey}&offset={offset}&n={count}&offline={offline.ToString().ToLowerInvariant()}");
 
-            List<UserBriefResponse> res = null;
-
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                Logger.Debug(() => $"JSON received: {json}");
-                res = JsonConvert.DeserializeObject<List<UserBriefResponse>>(json);
-            }
-
-            return res;
+            return await Utils.ParseResponse<List<UserBriefResponse>>(response);
         }
 
         public async Task<NotificationResponse> SendRequest(string userId, string fromWho)
         {
             Logger.Debug(() => $"Sending friend request to {userId} from {fromWho}");
-            JObject json = new JObject();
-            json["type"] = "friendrequest";
-            json["message"] = $"{fromWho} wants to be your friend";
+
+            JObject json = new JObject()
+            {
+                { "type", "friendrequest" },
+                { "message", $"{fromWho} wants to be your friend" }
+            };
 
             Logger.Debug(() => $"Prepared JSON to post: {json}");
 
@@ -46,50 +39,22 @@ namespace VRChatApi.Endpoints
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             HttpResponseMessage response = await Global.HttpClient.PostAsync($"user/{userId}/notification?apiKey={Global.ApiKey}", content);
-            
 
-            NotificationResponse res = null;
-
-            if (response.IsSuccessStatusCode)
-            {
-                var receivedJson = await response.Content.ReadAsStringAsync();
-                Logger.Debug(() => $"JSON received: {receivedJson}");
-                res = JsonConvert.DeserializeObject<NotificationResponse>(receivedJson);
-            }
-
-            return res;
+            return await Utils.ParseResponse<NotificationResponse>(response);
         }
 
-        // TODO: proper return type, need to document
-        public async Task<string> DeleteFriend(string userId)
+        public async Task<bool> DeleteFriend(string userId)
         {
             HttpResponseMessage response = await Global.HttpClient.DeleteAsync($"auth/user/friends/{userId}?apiKey={Global.ApiKey}");
 
-            string res = "";
-
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                Logger.Debug(() => $"JSON received: {json}");
-                res = json;
-            }
-
-            return res;
+            return Utils.ParseResponse<string>(response) != null;
         }
 
-        // TODO: proper return type, need to document
-        public async Task AcceptFriend(string userId)
+        public async Task<bool> AcceptFriend(string userId)
         {
             HttpResponseMessage response = await Global.HttpClient.PutAsync($"auth/user/notifications/{userId}/accept?apiKey={Global.ApiKey}", new StringContent(""));
 
-            /*string res = "";
-
-            if (response.IsSuccessStatusCode)
-            {
-                res = await response.Content.ReadAsStringAsync();
-            }
-
-            return res;*/
+            return Utils.ParseResponse<string>(response) != null;
         }
     }
 }

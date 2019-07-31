@@ -23,21 +23,14 @@ namespace VRChatApi.Endpoints
 
             HttpResponseMessage response = await Global.HttpClient.GetAsync($"worlds/{id}?apiKey={Global.ApiKey}");
 
-            WorldResponse res = null;
+            var res = await Utils.ParseResponse<WorldResponse>(response);
 
-            if (response.IsSuccessStatusCode)
+            // parse instances
+            res.instances = res._instances.Select(data => new WorldInstance()
             {
-                string json = await response.Content.ReadAsStringAsync();
-                Logger.Debug(() => $"JSON received: {json}");
-                res = JsonConvert.DeserializeObject<WorldResponse>(json);
-                
-                // Parse instances.
-                res.instances = res._instances.Select(data => new WorldInstance()
-                {
-                    id = (string)data[0],
-                    occupants = (int)data[1]
-                }).ToList();
-            }
+                id = (string)data[0],
+                occupants = (int)data[1]
+            }).ToList();
 
             return res;
         }
@@ -48,7 +41,9 @@ namespace VRChatApi.Endpoints
             ReleaseStatus? releaseStatus = null, int offset = 0, int count = 20)
         {
             Logger.Debug(() => "Getting world list");
+
             var param = new StringBuilder();
+
             param.Append($"&n={count}");
             param.Append($"&offset={offset}");
 
@@ -73,19 +68,37 @@ namespace VRChatApi.Endpoints
             }
 
             if (user.HasValue)
+            {
                 param.Append($"&user={user.Value.ToString().ToLowerInvariant()}");
+            }
+
             if (!string.IsNullOrEmpty(userId))
+            {
                 param.Append($"&userId={userId}");
+            }
+
             if (!string.IsNullOrEmpty(keyword))
+            {
                 param.Append($"&search={keyword}");
+            }
+
             if (!string.IsNullOrEmpty(tags))
+            {
                 param.Append($"&tag={tags}");
+            }
+
             if (!string.IsNullOrEmpty(excludeTags))
+            {
                 param.Append($"&notag={excludeTags}");
+            }
+
             if (releaseStatus.HasValue)
+            {
                 param.Append($"&releaseStatus={releaseStatus.Value.ToString().ToLowerInvariant()}");
+            }
 
             string baseUrl = "worlds";
+
             if (endpoint.HasValue)
             {
                 switch (endpoint.Value)
@@ -104,38 +117,22 @@ namespace VRChatApi.Endpoints
 
             HttpResponseMessage response = await Global.HttpClient.GetAsync($"{baseUrl}?apiKey={Global.ApiKey}{param.ToString()}");
 
-            List<WorldBriefResponse> res = null;
-
-            if (response.IsSuccessStatusCode)
-            {
-                string json = await response.Content.ReadAsStringAsync();
-                Logger.Debug(() => $"JSON received: {json}");
-                res = JsonConvert.DeserializeObject<List<WorldBriefResponse>>(json);
-            }
-
-            return res;
+            return await Utils.ParseResponse<List<WorldBriefResponse>>(response);
         }
 
         public async Task<WorldMetadataResponse> GetMetadata(string id)
         {
             Logger.Debug(() => $"Getting world metadata with ID: {id}");
+
             HttpResponseMessage response = await Global.HttpClient.GetAsync($"worlds/{id}/metadata?apiKey={Global.ApiKey}");
 
-            WorldMetadataResponse res = null;
-
-            if (response.IsSuccessStatusCode)
-            {
-                string json = await response.Content.ReadAsStringAsync();
-                Logger.Debug(() => $"JSON received: {json}");
-                res = JsonConvert.DeserializeObject<WorldMetadataResponse>(json);
-            }
-
-            return res;
+            return await Utils.ParseResponse<WorldMetadataResponse>(response);
         }
 
         public async Task<WorldInstanceResponse> GetInstance(string worldId, string instanceId)
         {
             Logger.Debug(() => $"Getting world instance with world ID: {worldId} and instance ID {instanceId}");
+
             HttpResponseMessage response = await Global.HttpClient.GetAsync($"worlds/{worldId}/{instanceId}?apiKey={Global.ApiKey}");
 
             WorldInstanceResponse res = null;
@@ -157,9 +154,11 @@ namespace VRChatApi.Endpoints
                     users = (json["users"] is JArray)
                         ? json["users"].Select(tk => tk.ToObject<WorldInstanceUserResponse>()).ToList() : null,
                     hidden = (json["hidden"] == null || json["hidden"].Type == JTokenType.Null) ? null : json["hidden"].ToString(),
-                    nonce = (json["nonce"] == null) ? null : json["nonce"].ToString(),
+                    nonce = json["nonce"]?.ToString(),
                 };
             }
+
+            response.Dispose();
 
             return res;
         }

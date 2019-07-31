@@ -16,6 +16,7 @@ namespace VRChatApi
         public WorldApi WorldApi { get; set; }
         public ModerationsApi ModerationsApi { get; set; }
         public AvatarApi AvatarApi { get; set; }
+        public FavouriteApi FavouriteApi { get; set; }
 
         public VRChatApi(string username, string password)
         {
@@ -29,6 +30,7 @@ namespace VRChatApi
             WorldApi = new WorldApi();
             ModerationsApi = new ModerationsApi();
             AvatarApi = new AvatarApi();
+            FavouriteApi = new FavouriteApi();
 
             // initialize http client
             // TODO: use the auth cookie
@@ -43,12 +45,15 @@ namespace VRChatApi
             string authEncoded = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{UserApi.Username}:{UserApi.Password}"));
 
             var header = Global.HttpClient.DefaultRequestHeaders;
+
             if (header.Contains("Authorization"))
             {
                 Logger.Debug(() => "Removing existing Authorization header");
                 header.Remove("Authorization");
             }
+
             header.Add("Authorization", $"Basic {authEncoded}");
+
             Logger.Trace(() => $"Added new Authorization header");
         }
     }
