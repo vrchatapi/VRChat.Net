@@ -21,7 +21,6 @@ namespace VRChatApi.Classes
         public string SenderUsername { get; set; }
         public string ReceiverUserId { get; set; }
         public string Message { get; set; }
-        public NotificationDetails details { get; set; }
         [JsonProperty(PropertyName = "created_at")]
         public string Created { get; set; }
         public DateTime CreatedAt { get { return Convert.ToDateTime(Created); } }
