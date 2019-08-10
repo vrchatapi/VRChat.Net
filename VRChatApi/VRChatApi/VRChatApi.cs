@@ -16,6 +16,7 @@ namespace VRChatApi
         public WorldApi WorldApi { get; set; }
         public ModerationsApi ModerationsApi { get; set; }
         public AvatarApi AvatarApi { get; set; }
+        public FavouriteApi FavouriteApi { get; set; }
         public NotificationsAPI NotificationsAPI { get; set; }
 
         public VRChatApi(string username, string password)
@@ -30,6 +31,7 @@ namespace VRChatApi
             WorldApi = new WorldApi();
             ModerationsApi = new ModerationsApi();
             AvatarApi = new AvatarApi();
+            FavouriteApi = new FavouriteApi();
             NotificationsAPI = new NotificationsAPI();
 
             // initialize http client
@@ -45,26 +47,16 @@ namespace VRChatApi
             string authEncoded = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{UserApi.Username}:{UserApi.Password}"));
 
             var header = Global.HttpClient.DefaultRequestHeaders;
+
             if (header.Contains("Authorization"))
             {
                 Logger.Debug(() => "Removing existing Authorization header");
                 header.Remove("Authorization");
             }
+
             header.Add("Authorization", $"Basic {authEncoded}");
+
             Logger.Trace(() => $"Added new Authorization header");
         }
-
-        /*public static async System.Threading.Tasks.Task<object> ParseResponseAsync(HttpResponseMessage response, Type Class = null)
-        {
-            Object theObject = Activator.CreateInstance(Class);
-            var test = new Class();
-            if (response.IsSuccessStatusCode)
-            {
-                var receivedJson = await response.Content.ReadAsStringAsync();
-                Logger.Debug(() => $"JSON received: {receivedJson}");
-                res = JsonConvert.DeserializeObject<UserResponse>(receivedJson);
-            }
-            return theObject;
-        }*/
     }
 }

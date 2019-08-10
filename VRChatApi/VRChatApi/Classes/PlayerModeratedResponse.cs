@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#pragma warning disable IDE1006
+
 namespace VRChatApi.Classes
 {
-    public class PlayerModeratedResponse
+    public class PlayerModeratedResponse : Response
     {
         public string id { get; set; }
         public string type { get; set; }
@@ -14,6 +16,6 @@ namespace VRChatApi.Classes
         public string sourceDisplayName { get; set; }
         public string targetUserId { get; set; }
         public string targetDisplayName { get; set; }
-        public string created { get; set; }
+        public DateTime created { get; set; }
     }
 }

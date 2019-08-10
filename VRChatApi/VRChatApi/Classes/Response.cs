@@ -9,9 +9,11 @@ namespace VRChatApi.Classes
 {
     public class Response
     {
-        public object Content { get; set; }
-        public object Status { get; set; }
+        
+        [JsonIgnore]
         public HttpResponseMessage Raw { get; set; }
+        /*public object Content { get; set; }
+        public object Status { get; set; }
         public async Task<Response> FromResponseMessageAsync(HttpResponseMessage response) { // , object content = null
             // if (content != null) Content = content;
             if (response != null) {
@@ -21,7 +23,7 @@ namespace VRChatApi.Classes
                 } catch { Status = JsonConvert.DeserializeObject<Error>(json); }
             }
             return this;
-        }
+        }*/
     }
     public class Message
     {

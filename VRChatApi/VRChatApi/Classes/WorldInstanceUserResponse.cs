@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace VRChatApi.Classes
 {
-    public class WorldInstanceUserResponse
+    public class WorldInstanceUserResponse : Response
     {
         public string id { get; set; }
         public string username { get; set; }

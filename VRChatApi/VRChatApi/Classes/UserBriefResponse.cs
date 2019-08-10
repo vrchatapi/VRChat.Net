@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+
+#pragma warning disable IDE1006
 
 namespace VRChatApi.Classes
 {
@@ -38,7 +39,7 @@ namespace VRChatApi.Classes
             }
         }
     }
-    public class UserBriefResponse
+    public class UserBriefResponse : Response
     {
         [JsonIgnore]
         public bool Offline { get; set; }
@@ -47,14 +48,13 @@ namespace VRChatApi.Classes
         public string displayName { get; set; }
         public string currentAvatarImageUrl { get; set; }
         public string currentAvatarThumbnailImageUrl { get; set; }
-        public string developerType { get; set; }
+        public string last_platform { get; set; }
         public List<string> tags { get; set; }
+        public string developerType { get; set; }
         public string status { get; set; }
         public string statusDescription { get; set; }
+        public string friendKey { get; set; }
+        public bool isFriend { get; set; }
         public string location { get; set; }
-        public string worldId { get; set; }
-        public string instanceId { get; set; }
-        [JsonIgnore]
-        public HttpResponseMessage Raw { get; set; }
     }
 }

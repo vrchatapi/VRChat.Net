@@ -1,16 +1,19 @@
-﻿using System;
-using System.ComponentModel;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using System;
+
+#pragma warning disable IDE1006
 
 namespace VRChatApi.Classes
 {
     public class NotificationDetails
     {
         public string WorldId { get; set; }
+        [JsonIgnore]
+        public bool rsvp { get; set; }
         public string WorldName { get; set; }
     }
-    public class NotificationResponse
+
+    public class NotificationResponse : Response
     {
         public string Id { get; set; }
         public string Type { get; set; }
@@ -18,17 +21,12 @@ namespace VRChatApi.Classes
         public string SenderUsername { get; set; }
         public string ReceiverUserId { get; set; }
         public string Message { get; set; }
-        public string Details { get; set; } // unknown
+        public NotificationDetails details { get; set; }
         [JsonProperty(PropertyName = "created_at")]
         public string Created { get; set; }
-        [JsonIgnore]
         public DateTime CreatedAt { get { return Convert.ToDateTime(Created); } }
         public string JobName { get; set; }
         public string JobColor { get; set; }
-
-        [Obsolete("Typoed property, use receiverUserId instead")]
-        [JsonIgnore]
-        public string recieverUserId { get => ReceiverUserId; set => ReceiverUserId = value; }
     }
     public class NotificationResponseWithDetails : NotificationResponse
     {
